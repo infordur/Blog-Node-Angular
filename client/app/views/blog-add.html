@@ -1,0 +1,16 @@
+<form name="blogform" role="form" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="title" class="control-label">Titulo</label>
+        <input type="text" ng-model="blog.title" class="form-control" id="title" placeholder="Titulo del Post" required>
+    </div>
+    <div class="form-group">
+        <label for="description" class="control-label">Description</label>
+        <input type="text" ng-model="blog.description" class="form-control" id="description" placeholder="Contenido del post" required>
+    </div>
+
+    <div class="form-group">
+        <input type="file" id="file">
+        <!--<div class="button" ngf-select ngf-change="upload($files)">Upload on file change</div>-->
+    </div>
+    <input type="submit" class="btn btn-primary" ng-disabled="blogform.$invalid"  ng-click="saveBlog()" value="{{button}}">
+</form>

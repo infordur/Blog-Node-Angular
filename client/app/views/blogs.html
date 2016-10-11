@@ -1,0 +1,25 @@
+<a href="/#/create/blog" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Crear Post</a>
+<br/><br/>
+
+<!--dir-paginate="producto in productos |orderBy:sortKey:reverse| filter: search| itemsPerPage: 10"-->
+<article class="blog">
+    <div class="thumbnail" dir-paginate="blog in blogs | filter: searchBlogs | itemsPerPage: 5 ">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 ">
+                <img class="img-responsive img-rounded" ng-src="http://localhost:3000/images/{{ blog.image }}" alt="{{ blog.image }}">
+            </div>
+            <div class="col-sm-8 col-md-8 blog-body">
+                <h3><a ng-href="/#/blog/{{ blog._id }}">{{ blog.title }}</a></h3>
+                <p>{{ blog.description | limitTo: 250 }}...</p>
+            </div>
+        </div>
+    </div>
+</div>
+<dir-pagination-controls
+    max-size="10"
+    direction-links="true"
+    boundary-links="true">
+</dir-pagination-controls>
+
+
+
