@@ -8,7 +8,7 @@
  * Factory in the clientApp.
  */
 angular.module('clientApp')
-  .factory('BlogFactory', function ($http, $routeParams) {
+  .factory('BlogFactory', function ($http, $location, $routeParams) {
     // Service logic
     var url = 'http://localhost:3000/api/blogs';
 
@@ -57,7 +57,7 @@ angular.module('clientApp')
                     'Content-Type': undefined
                 }
             }).success(function(data) {
-                    console.log('Exito');
+                    $location.path('/blogs/' + $routeParams.id)
             })
             .error(function(err) {
                 console.log(err);

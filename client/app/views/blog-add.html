@@ -1,11 +1,11 @@
 <form name="blogform" role="form" method="POST" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="title" class="control-label">Titulo</label>
+        <label for="title" class="control-label">Título</label>
         <input type="text" ng-model="blog.title" class="form-control" id="title" placeholder="Titulo del Post" required>
     </div>
     <div class="form-group">
-        <label for="description" class="control-label">Description</label>
-        <input type="text" ng-model="blog.description" class="form-control" id="description" placeholder="Contenido del post" required>
+        <label for="description" class="control-label">Descripción</label>
+        <textarea ng-model="blog.description" class="form-control" id="description" cols="30" rows="10" placeholder="Contenido del post" required></textarea>
     </div>
 
     <div class="form-group">

@@ -1,21 +1,26 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var config = require('./config/config');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var _ = require('lodash');
 var path = require('path');
 var multer = require('multer');
 var fs = require('fs');
-
 var upload = multer({ dest: 'uploads/' });
+var jwt = require('jwt-simple');
+var passport = require('passport');
+
 
 // Creamos la aplicacción
 var app = express();
 
-// Aádimos un middleware para la API REST
+// Añadimos un middleware para la API REST
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(methodOverride('X-HTTP-Method-Override'));
+
+// Decimos que el directorio 'public' es público
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Soporte para CORS
@@ -26,17 +31,25 @@ app.use(function(req, res, next) {
 	next();
 });
 
+// Usamos el paquete passport
+app.use(passport.initialize());
+
 // Cargamos los modelos
 app.models = require('./models/index');
 
-// Cargamos las Rutas.
+// Cargamos los Controladores.
 var BlogCtrl = require('./controllers/BlogController');
+var UserCtrl = require('./controllers/UserController');
+
+require('./config/passport')(passport);
 
 //Definimos el Router.
-var blogs = express.Router();
+var apiRoutes = express.Router();
+
+//------------------ Blogs Router ------------------------------
 
 // Subida de POST (separado de .route por problemas con multer)
-blogs.post('/blogs', upload.any(), function(req, res, next) {
+apiRoutes.post('/blogs', upload.any(), function(req, res, next) {
     console.log(req.files);
     console.log(req.body);
 
@@ -55,7 +68,7 @@ blogs.post('/blogs', upload.any(), function(req, res, next) {
     }
 });
 
-blogs.put('/blogs/:id', upload.any(), function(req, res, next) {
+apiRoutes.put('/blogs/:id', upload.any(), function(req, res, next) {
     console.log(req.files);
     console.log(req.body);
 
@@ -76,15 +89,38 @@ blogs.put('/blogs/:id', upload.any(), function(req, res, next) {
 
 
 //Definimos la ruta con sus métodos.
-blogs.route('/blogs')
+apiRoutes.route('/blogs')
 	.get(BlogCtrl.findAllBlogs)
 
-blogs.route('/blogs/:id')
+apiRoutes.route('/blogs/:id')
 	.get(BlogCtrl.findById)
 	.delete(BlogCtrl.deleteBlog);
 
-// Definimos la ruta base de nuestra api (/api/blogs)
-app.use('/api', blogs);
+
+//-------------- Fin Router Blog ---------------------------
+
+//-------------- Router Users -------------------------------
+
+
+apiRoutes.route('/users')
+    .get(UserCtrl.findAllUsers)
+    .post(UserCtrl.createUser);
+
+apiRoutes.route('/users/:id')
+    .get(UserCtrl.findById)
+    .put(UserCtrl.editUser)
+    .delete(UserCtrl.deleteUser);
+
+apiRoutes.route('/users/login')
+    .post(UserCtrl.findByName);
+
+//-------------- Fin Router Users ---------------------------
+
+
+
+
+// Definimos la ruta base de nuestra api (/api/*)
+app.use('/api', apiRoutes);
 
 /*// Cargamos las Rutas.
 var routes = require('./routes');
@@ -94,7 +130,7 @@ _.each(routes, function(controller, route) {
 
 
 // Conectamos con MongoDb
-mongoose.connect('mongodb://localhost/blog', function(err, res) {  
+mongoose.connect(config.database, function(err, res) {  
   if(err) {
     console.log('ERROR: connecting to Database. ' + err);
   }

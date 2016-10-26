@@ -1,4 +1,6 @@
 <ng-include src="'views/blog-nav.html'"></ng-include>
 <h3>{{ blog.title }}</h3>
-<img class="thumbnail" ng-src='http://localhost:3000/images/{{ blog.image }}' alt="{{blog.image}}">
+<small>{{ blog.created | date:"MM/dd/yyyy '-' h:mma" }}</small>
+<img class="thumbnail img-responsive" ng-src='http://localhost:3000/images/{{ blog.image }}' alt="{{blog.image}}">
 <p>{{ blog.description }}</p>
+

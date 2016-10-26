@@ -8,10 +8,12 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('MainCtrl', function ($scope, $location, UserFactory) {
+
+        $scope.logout = function() {
+            UserFactory.logout().then(function() {
+                $location.path('/');
+            });
+        }
+
+    });

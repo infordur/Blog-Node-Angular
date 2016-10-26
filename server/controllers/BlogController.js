@@ -1,21 +1,3 @@
-/*var restful = require('node-restful');
-
-module.exports = function(app, route) {
-	var rest = restful.model(
-		// Definimos la configuración del controlador para REST
-		'blog',
-		app.models.blog //Modelo de blog (mongoose.Schema)
-	).methods(['get', 'put', 'post', 'delete']);
-
-	// Register this endpoint with the application.
-	rest.register(app, route);
-
-	// Devolvemos el middleware.
-	return function(req, res, next) {
-		next();
-	};
-};*/
-
 var mongoose = require('mongoose');
 var BlogModel = mongoose.model('blog');
 
@@ -45,11 +27,15 @@ exports.findById = function(req, res) {
 exports.addBlog = function(req, res, filename) {
 	
 	console.log('POST');
+	console.log(req);
+	console.log("----------------------------");
 	console.log(req.body);
 
 	var blog = new BlogModel({
 		title: req.body.title,
 		description: req.body.description,
+		created: new Date,
+		updated: new Date,
 		image: filename
 	});
 
@@ -67,6 +53,7 @@ exports.updateBlog = function(req, res, filename) {
 	BlogModel.findById(req.params.id, function(err, blog) {
 		blog.title = req.body.title;
 		blog.description = req.body.description;
+		blog.updated = new Date;
 		blog.image = filename;
 
 		blog.save(function(err) {

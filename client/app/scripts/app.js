@@ -19,8 +19,8 @@ angular
 
         $routeProvider
             .when('/', {
-            templateUrl: 'views/main.html',
-            controller: 'MainCtrl',
+            templateUrl: 'views/blogs.html',
+            controller: 'BlogsCtrl',
         })
         .when('/about', {
             templateUrl: 'views/about.html',
@@ -46,8 +46,27 @@ angular
             templateUrl: 'views/blog-edit.html',
             controller: 'BlogEditCtrl',
         })
+        .when('/registro', {
+          templateUrl: 'views/registro.html',
+          controller: 'RegistroCtrl',
+        })
         .otherwise({
             redirectTo: '/'
+        });
+    })
+
+    .run(function($rootScope, $location, UserFactory) {
+
+        var routespermission=['/create/blog','/blog/:id/delete','/blog/:id/edit'];
+
+        $rootScope.$on('$routeChangeStart', function(){
+            $rootScope.isAuthenticated = UserFactory.isAuthenticated();
+
+            if(routespermission.indexOf($location.path()) !=-1) {
+                if(!$rootScope.isAuthenticated){
+                    $location.path('/');
+                }
+            }
         });
     })
     /*.factory('BlogRestangular', function (Restangular) {

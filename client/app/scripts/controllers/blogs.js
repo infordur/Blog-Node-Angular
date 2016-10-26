@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('BlogsCtrl', function ($scope, $http, BlogFactory) {
+  .controller('BlogsCtrl', function ($scope, $http, BlogFactory, UserFactory) {
 
     //$scope.blogs = {};
 
@@ -16,5 +16,7 @@ angular.module('clientApp')
         $scope.blogs = data.data;
     });
     //$scope.blogs = Blog.getList().$object;
+
+    //console.log(UserFactory.isAuthenticated);
 
   });

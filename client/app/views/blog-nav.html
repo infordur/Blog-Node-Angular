@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul ng-hide="{{!isAuthenticated}}" class="nav nav-tabs">
     <li role="presentation" ng-class="{active: viewBlog}"><a ng-href="/#/blog/{{ blog._id }}">Ver</a></li>
     <li role="presentation" ng-class="{active: editBlog}"><a ng-href="/#/blog/{{ blog._id }}/edit">Editar</a></li>
 </ul>

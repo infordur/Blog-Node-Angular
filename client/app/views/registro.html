@@ -1,0 +1,13 @@
+<form name="registerForm" role="form">
+    <div class="form-group">
+        <label for="user" class="control-label">Usuario</label>
+        <input type="text" class="form-control" id="account" ng-model="user.user">
+    </div>
+    <div>
+        <label for="password" class="control-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" ng-model="user.password">
+    </div>
+    <br/>
+    <input type="submit" class="btn btn-primary" ng-disabled="registerForm.$invalid"  ng-click="register()" value="Registrarse">
+</form>
+<br/>

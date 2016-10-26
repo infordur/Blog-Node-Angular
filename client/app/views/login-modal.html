@@ -1,0 +1,30 @@
+<div class="modal fade" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h2 class="modal-title">Log In</h2>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="user.user" placeholder="Usuario" />
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" ng-model="user.password" placeholder="Contraseña" />
+          </div>
+        </form>
+      </div>
+
+      <!-- Button -->
+      <div class="modal-footer" ng-controller="ModalCtrl">
+        <button class="btn btn-primary btn-block btn-lg" ng-click="authenticate()">Entrar</button><button ng-click="registerPage()" class="btn btn-default btn-block btn-lg">Registrarse</a>
+      </div>
+
+    </div>
+  </div>
+</div>

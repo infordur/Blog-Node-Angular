@@ -9,6 +9,15 @@ var BlogSchema = new Schema({
 	description: {
 		type: String
 	},
+	created: {
+		type: Date, default: Date.now 
+	},
+	updated: {
+		type: Date
+	},
+	user: {
+		type: String
+	},
 	image: {
 		type: String
 	}
